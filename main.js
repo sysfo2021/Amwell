@@ -1,295 +1,139 @@
 (function ($) {
-  ("use strict");
+  "use strict";
 
-  //scrollspy menu
-  $("body").scrollspy({
-    target: "#mainmenu",
-    offset: 100,
+  $(window).on('load', function () {
+    
+    /* preloader activate */
+    $(".preloader-activate").removeClass('preloader-active');
+  });
+  
+  /* offcanvas menu active */
+  $("#header-menu-trigger").on("click", function(e){
+    e.stopPropagation();
+    $("#offcanvas-menu").toggleClass("active");
+    $(".body-wrapper").toggleClass("active-overlay");
+    $("body").toggleClass("overflow-hidden");
+  });
+  
+  /* shop filter menu active */
+  $("#filter-trigger").on("click", function(e){
+    e.stopPropagation();
+    $("#shop-filter-menu").slideToggle();
   });
 
-  // Barfiller js
-  $(".bar1").barfiller({
-    duration: 2000,
+  $("#shop-filter-slideup").on("click", function(e){
+    e.stopPropagation();
+    $("#shop-filter-menu").slideUp();
+  });
+  
+  /* remove active class on click other parts of the body */
+  $('.body-wrapper').on('click', function () {
+    $("#offcanvas-menu").removeClass("active");
+    $(".body-wrapper").removeClass("active-overlay");
+    $("body").removeClass("overflow-hidden");
   });
 
+  /* svg inject */
+  SVGInject($(".injectable"));
 
-
-  //$(".project-gallery").mixItUp();
-
-  //   magnific popup activation
-  $(".video-play-btn").magnificPopup({
-    type: "video",
-  });
-  $(".img-popup").magnificPopup({
-    type: "image",
-    gallery: {
-      enabled: true
-    },
+  /* background image set */
+  var bgSelector = $(".bg-img");
+  bgSelector.each(function (index, elem) {
+      var element = $(elem),
+          bgSource = element.data('bg');
+      element.css('background-image', 'url(' + bgSource + ')');
   });
 
-  // testimonial-slider
-  var $testimonialSlider = $(".testimonial-slider");
-  $testimonialSlider.owlCarousel({
-    loop: true,
-    navText: [
-      '<i class="fa fa-angle-left"></i>',
-      '<i class="fa fa-angle-right"></i>',
-    ],
-    nav: true,
-    nav: true,
-    dots: false,
-    autoplayTimeout: 6000,
-    smartSpeed: 1200,
-    responsive: {
-      0: {
-        items: 1,
-        nav: false,
-      },
-      576: {
-        items: 1,
-        nav: false,
-      },
-      950: {
-        items: 1,
-        nav: false,
-      },
-      960: {
-        items: 1,
-        nav: false,
-      },
-      1200: {
-        items: 1,
-      },
-    },
-  });
-
-  // team_slider
-  var $team_slider = $(".team_slider");
-  $team_slider.owlCarousel({
-    loop: true,
-    navText: [
-      '<i class="fa fa-angle-left"></i>',
-      '<i class="fa fa-angle-right"></i>',
-    ],
-    nav: true,
-    dots: false,
-    margin: 30,
-    autoplay: false,
-    center: true,
-    autoplayTimeout: 8000,
-    smartSpeed: 1500,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      576: {
-        items: 1,
-      },
-      768: {
-        items: 2,
-      },
-      992: {
-        items: 3,
-      },
-      1200: {
-        items: 3,
-      },
-      1920: {
-        items: 3,
-      },
-    },
-  });
-
-  // blog-slider
-  //var $blog_slider = $(".blog-slider");
-  //$blog_slider.owlCarousel({
-  //  loop: true,
-  //  nav: false,
-  //  dots: false,
-  //  margin: 30,
-  //  autoplay: true,
-  //  autoplayTimeout: 6000,
-  //  smartSpeed: 1200,
-  //  responsive: {
-  //    0: {
-  //      items: 1,
-  //    },
-  //    576: {
-  //      items: 1,
-  //    },
-  //    768: {
-  //      items: 2,
-  //    },
-  //    1200: {
-  //      items: 3,
-  //    },
-  //    1920: {
-  //      items: 3,
-  //    },
-  //  },
-  //});
-
-  // partner-slider
-  var $brand_slider = $(".brand-slider");
-  $brand_slider.owlCarousel({
-    loop: true,
-    nav: false,
-    dots: false,
-    margin: 30,
-    autoplay: true,
-    autoplayTimeout: 6000,
-    smartSpeed: 1200,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      450: {
-        items: 3,
-      },
-      768: {
-        items: 4,
-      },
-      1200: {
-        items: 5,
-      },
-      1920: {
-        items: 5,
-      },
-    },
-  });
-
-  // Portfolio Gallery slick part //
-
-  $(".big-image").slick({
+  /* slick slider activation */
+  
+  $('.hero-slider-wrapper').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
+    dots: true,
     arrows: false,
-    fade: true,
-    asNavFor: ".slider-img",
-
-    responsive: [{
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          vertical: false,
-          horizontal: true,
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
+    autoplay: true,
+    autoplaySpeed: 5000
   });
-
-  $(".slider-img").slick({
-    slidesToShow: 4,
+  
+  $('.welcome-slider-wrapper').slick({
+    slidesToShow: 1,
     slidesToScroll: 1,
-    responsive: [{
-      breakpoint: 768,
-      settings: {
-        vertical: false,
-        slidesToShow: 3,
-      },
-    }, ],
-    asNavFor: ".big-image",
+    dots: true,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: 5000
+  });
+
+  $('.product-image-slider-wrapper').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dots: true,
+    arrows: false
+  });
+  
+  $('.category-slider-wrapper').slick({
+    slidesToShow: 3,
+    slidesToScroll: 5,
     dots: false,
-    arrows: true,
-    prevArrow: '<i class="fa fa fa-chevron-left slidPrv4"></i>',
-    nextArrow: '<i class="fa fa-chevron-right slidNext4"></i>',
-    centerPadding: "0px",
-    centerMode: true,
-    focusOnSelect: true,
+    arrows: false,
+    autoplay: false,
+    infinite: true,
+    responsive: [
+
+      {
+          breakpoint: 370,
+          settings: {
+              slidesToShow: 3
+          }
+      }
+  ]
   });
 
-  /** Product Details  carousel **/
-  //var $product_slider = $(".all-slider");
-  //$product_slider.owlCarousel({
-  //  loop: false,
-  //  dots: false,
-  //  nav: true,
-  //  navText: [
-  //    "<i class='fa fa-angle-left'></i>",
-  //    "<i class='fa fa-angle-right'></i>",
-  //  ],
-  //  margin: 0,
-  //  autoplay: false,
-  //  items: 4,
-  //  autoplayTimeout: 6000,
-  //  smartSpeed: 1000,
-  //  responsive: {
-  //    0: {
-  //      items: 4,
-  //    },
-  //    768: {
-  //      items: 4,
-  //    },
-  //  },
-  //});
-
-  ///** Product Details  carousel **/
-  //$(".related-product-slider").owlCarousel({
-  //  loop: true,
-  //  dots: false,
-  //  nav: true,
-  //  navText: [
-  //    "<i class='fa fa-angle-left'></i>",
-  //    "<i class='fa fa-angle-right'></i>",
-  //  ],
-  //  margin: 30,
-  //  autoplay: false,
-  //  items: 4,
-  //  autoplayTimeout: 6000,
-  //  smartSpeed: 1000,
-  //  responsive: {
-  //    0: {
-  //      items: 1,
-  //    },
-  //    576: {
-  //      items: 2,
-  //    },
-  //    768: {
-  //      items: 3,
-  //    },
-  //    992: {
-  //      items: 3,
-  //    },
-  //    1200: {
-  //      items: 4,
-  //    },
-  //  },
-  //});
-
-
-  // bottom to top js start
-  $(".bottomtotop").hide();
-  $(window).on("scroll", function () {
-    if ($(window).scrollTop() > 800) {
-      $(".bottomtotop").show();
-    } else {
-      $(".bottomtotop").hide();
-    }
-    if ($(".navigation").offset().top > 0) {
-      $(".navigation").addClass("stiky-nav");
-    } else {
-      $(".navigation").removeClass("stiky-nav");
-    }
-  });
-  $(".bottomtotop").on("click", function () {
-    $("html, body").animate({
-        scrollTop: 0,
-      },
-      600
-    );
-    return false;
+  /* search keyword */
+  
+  $("#header-search-input").on("focus", function(){
+    $("#search-keyword-box").slideDown();
   });
 
-  //  preloader js start
-  $(window).on('load', function () {
-    $('#preloader').fadeOut()
-  })
-}($))
+  $("#header-search-input").on("focusout", function(){
+    $("#search-keyword-box").slideUp();
+  });
+
+  
+  /* price range */
+
+  $('#price-range-slider').ionRangeSlider({
+		type: 'double',
+        skin: 'round',
+		hide_min_max: true,
+		min: 0,
+		max: 500,
+		from: 50,
+		to: 440
+    });
+
+    
+    /* cart plus minus */
+    
+    var CartPlusMinus = $('.cart-plus-minus');
+    CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
+    CartPlusMinus.append('<div class="inc qtybutton">+</div>');
+    $(".qtybutton").on("click", function() {
+        var $button = $(this);
+        var oldValue = $button.parent().find("input").val();
+        if ($button.text() === "+") {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            // Don't allow decrementing below zero
+            if (oldValue > 1) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 1;
+            }
+        }
+        $button.parent().find("input").val(newVal);
+    });
+    
+
+
+})(jQuery);
